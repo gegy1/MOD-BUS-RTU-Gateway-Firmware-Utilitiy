@@ -247,7 +247,7 @@ Partial Class Main
         Me.MinimizeBox = False
         Me.Name = "Main"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "MOD-BUS RTU Gateway Firmware Utilitiy"
+        Me.Text = "MOD-BUS RTU Gateway Firmware Utilitiy (BETA)"
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()

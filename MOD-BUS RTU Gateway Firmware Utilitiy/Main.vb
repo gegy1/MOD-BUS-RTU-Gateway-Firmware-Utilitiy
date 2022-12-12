@@ -3,7 +3,7 @@
 
 Public Class Main
 
-
+    Private versionString As String = $"{My.Application.Info.Version.Major}.{My.Application.Info.Version.Minor}.{My.Application.Info.Version.Build} (BETA)"
     WithEvents controller As Controller
 
 
@@ -31,6 +31,7 @@ Public Class Main
     End Sub
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Text = $"{My.Application.Info.ProductName} {versionString}"
         controller = Controller.GetInstance
         Me.FirmwareFileTextBox.DataBindings.Add(controller.FirmwareFile.TextBinding)
         Me.KNXxmlFileTextBox.DataBindings.Add(controller.KNXProdFile.TextBinding)
