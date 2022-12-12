@@ -17,7 +17,7 @@ Public Class FirmwareFile
 
     Const deviceIDString As String = "USB\VID_2341"
     Sub FlashFirmware()
-        If Not MsgBox("Make sure your device is connected to KNX Bus and is connected to the PC by USB." + Environment.NewLine + "Continue flashing?", MsgBoxStyle.OkCancel + MsgBoxStyle.Information) = MsgBoxResult.Ok Then Return
+        If Not MsgBox("Make sure your device is connected to the PC by USB." + Environment.NewLine + "Continue flashing?", MsgBoxStyle.OkCancel + MsgBoxStyle.Information) = MsgBoxResult.Ok Then Return
         RaiseEvent ReportStatus("Flashing Firmware start...")
         Try
             Select Case HardwareType
@@ -42,20 +42,21 @@ Public Class FirmwareFile
             RaiseEvent ReportStatus("Device not found.")
             RaiseEvent ReportStatus("Please try to set the SAMD to bootloader mode and use alternative setup-methode.")
             RaiseEvent ReportStatus("To set the device into bootloader mode click reset button (right button) fastly two times.")
-            RaiseEvent ReportStatus("The LED will start pulsing. Now the device is in bootloader mode")
+            RaiseEvent ReportStatus("The LED (on the board of the device) will start pulsing. Now the device is in bootloader mode")
             RaiseEvent ReportStatus("Then try to run the flash procedure again.")
             Return
         End If
         RaiseEvent ReportStatus($"Found device on {serialPort.PortName}.")
         'Taken from the original powershell script
-        'I am not sure why this is done. I think it is only for checking if serialport is accessable 
-        'serialPort.Open()
-        'serialPort.Close()
-        'System.Threading.Thread.Sleep(1000)
+        'This sets the device to bootloader mode 
+        serialPort.Open()
+        serialPort.Close()
+        System.Threading.Thread.Sleep(5000)
+        serialPort = GetComPort()
         RaiseEvent ReportStatus("Writing firmware to device...")
         If WriteFirmware(serialPort) Then
             RaiseEvent ReportStatus("Writing firmware to device... done!")
-            RaiseEvent ReportStatus("You can disconnect the device now from USB Port")
+            RaiseEvent ReportStatus("You can now disconnect the device from USB Port")
         Else
             RaiseEvent ReportStatus("Could not flash firmware because of timeout in connecting to the device.")
             RaiseEvent ReportStatus("Is device in bootloader mode?")
@@ -172,7 +173,6 @@ Public Class FirmwareFile
         With pi
             .FileName = "openknxproducer\bossac.exe"
             .Arguments = $"--info --write --verify --reset --erase --port={serialPort.PortName} ""{Me.FileName}"""
-            '.Arguments = $"-r --port={serialPort.PortName} bla.bin"
             .RedirectStandardOutput = True
             .RedirectStandardError = True
             .RedirectStandardInput = True

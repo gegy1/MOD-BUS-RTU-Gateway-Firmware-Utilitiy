@@ -38,8 +38,10 @@ Partial Class Main
         Me.Label2 = New System.Windows.Forms.Label()
         Me.StautsTextBox = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
+        Me.TableLayoutPanel3.SuspendLayout()
         Me.SuspendLayout()
         '
         'TableLayoutPanel1
@@ -52,7 +54,7 @@ Partial Class Main
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.SettingsButton, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Cancel_Button, 3, 0)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(10, 387)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(18, 441)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
@@ -100,7 +102,7 @@ Partial Class Main
         '
         'SelectKNXProdXMLButton
         '
-        Me.SelectKNXProdXMLButton.Location = New System.Drawing.Point(368, 3)
+        Me.SelectKNXProdXMLButton.Location = New System.Drawing.Point(372, 3)
         Me.SelectKNXProdXMLButton.Name = "SelectKNXProdXMLButton"
         Me.SelectKNXProdXMLButton.Size = New System.Drawing.Size(28, 23)
         Me.SelectKNXProdXMLButton.TabIndex = 3
@@ -109,7 +111,7 @@ Partial Class Main
         '
         'CreateKNXProdFileButton
         '
-        Me.CreateKNXProdFileButton.Location = New System.Drawing.Point(429, 3)
+        Me.CreateKNXProdFileButton.Location = New System.Drawing.Point(453, 3)
         Me.CreateKNXProdFileButton.Name = "CreateKNXProdFileButton"
         Me.CreateKNXProdFileButton.Size = New System.Drawing.Size(91, 23)
         Me.CreateKNXProdFileButton.TabIndex = 4
@@ -118,12 +120,14 @@ Partial Class Main
         '
         'TableLayoutPanel2
         '
+        Me.TableLayoutPanel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel2.ColumnCount = 5
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93.0!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 88.88889!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11.11111!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 27.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 117.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 47.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99.0!))
         Me.TableLayoutPanel2.Controls.Add(Me.CreateKNXProdFileButton, 4, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.KNXxmlFileTextBox, 1, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.SelectKNXProdXMLButton, 2, 0)
@@ -140,7 +144,7 @@ Partial Class Main
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(544, 98)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(550, 98)
         Me.TableLayoutPanel2.TabIndex = 5
         '
         'FirmwareFileTextBox
@@ -154,7 +158,7 @@ Partial Class Main
         '
         'SelectFirmwareButton
         '
-        Me.SelectFirmwareButton.Location = New System.Drawing.Point(368, 33)
+        Me.SelectFirmwareButton.Location = New System.Drawing.Point(372, 33)
         Me.SelectFirmwareButton.Name = "SelectFirmwareButton"
         Me.SelectFirmwareButton.Size = New System.Drawing.Size(28, 23)
         Me.SelectFirmwareButton.TabIndex = 3
@@ -163,7 +167,7 @@ Partial Class Main
         '
         'FlashFirmwareButton
         '
-        Me.FlashFirmwareButton.Location = New System.Drawing.Point(429, 33)
+        Me.FlashFirmwareButton.Location = New System.Drawing.Point(453, 33)
         Me.FlashFirmwareButton.Name = "FlashFirmwareButton"
         Me.FlashFirmwareButton.Size = New System.Drawing.Size(91, 23)
         Me.FlashFirmwareButton.TabIndex = 4
@@ -172,7 +176,7 @@ Partial Class Main
         '
         'LoadLatestButton
         '
-        Me.LoadLatestButton.Location = New System.Drawing.Point(429, 63)
+        Me.LoadLatestButton.Location = New System.Drawing.Point(453, 63)
         Me.LoadLatestButton.Name = "LoadLatestButton"
         Me.LoadLatestButton.Size = New System.Drawing.Size(91, 23)
         Me.LoadLatestButton.TabIndex = 5
@@ -191,34 +195,52 @@ Partial Class Main
         '
         'StautsTextBox
         '
-        Me.StautsTextBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.StautsTextBox.Location = New System.Drawing.Point(12, 99)
+        Me.StautsTextBox.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.StautsTextBox.Location = New System.Drawing.Point(3, 28)
         Me.StautsTextBox.Multiline = True
         Me.StautsTextBox.Name = "StautsTextBox"
+        Me.StautsTextBox.ReadOnly = True
         Me.StautsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.StautsTextBox.Size = New System.Drawing.Size(544, 282)
+        Me.StautsTextBox.Size = New System.Drawing.Size(543, 288)
         Me.StautsTextBox.TabIndex = 6
         '
         'Label3
         '
-        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Label3.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(12, 83)
+        Me.Label3.Location = New System.Drawing.Point(3, 6)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(39, 13)
+        Me.Label3.Size = New System.Drawing.Size(37, 13)
         Me.Label3.TabIndex = 2
-        Me.Label3.Text = "Output"
+        Me.Label3.Text = "Status"
+        '
+        'TableLayoutPanel3
+        '
+        Me.TableLayoutPanel3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel3.ColumnCount = 1
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.Controls.Add(Me.StautsTextBox, 0, 1)
+        Me.TableLayoutPanel3.Controls.Add(Me.Label3, 0, 0)
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(13, 116)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 2
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 294.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(549, 319)
+        Me.TableLayoutPanel3.TabIndex = 7
         '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.Cancel_Button
-        Me.ClientSize = New System.Drawing.Size(566, 428)
-        Me.Controls.Add(Me.StautsTextBox)
+        Me.ClientSize = New System.Drawing.Size(574, 482)
+        Me.Controls.Add(Me.TableLayoutPanel3)
         Me.Controls.Add(Me.TableLayoutPanel2)
         Me.Controls.Add(Me.TableLayoutPanel1)
-        Me.Controls.Add(Me.Label3)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -229,8 +251,9 @@ Partial Class Main
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
         Me.TableLayoutPanel2.PerformLayout()
+        Me.TableLayoutPanel3.ResumeLayout(False)
+        Me.TableLayoutPanel3.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
@@ -248,4 +271,5 @@ Partial Class Main
     Friend WithEvents StautsTextBox As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents LoadLatestButton As Button
+    Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
 End Class

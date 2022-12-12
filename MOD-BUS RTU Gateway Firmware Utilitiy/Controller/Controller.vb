@@ -85,7 +85,6 @@ Public Class Controller
         UpdateStatus($"Extracting {zipDocument.Name}... done") : Return True
     End Function
     Async Function DownloadFirmware() As Task(Of Boolean)
-        Dim settings As ToolSettings = SettingsMgr.getInstance().Settings
         Dim zipDocuments As (firmwareZip As ZipDocument, producerZip As ZipDocument)
         With zipDocuments
             .firmwareZip = Nothing
@@ -127,8 +126,8 @@ Public Class Controller
         Me.KNXProdFile.CreateKNXProdFile()
     End Sub
 
-    Sub FlashFirmware()
-        Me.FirmwareFile.FlashFirmware()
+    Async Sub FlashFirmware()
+        Await Task.Run(Sub() Me.FirmwareFile.FlashFirmware())
     End Sub
 
     Private Sub UpdateStatus(message As String)
