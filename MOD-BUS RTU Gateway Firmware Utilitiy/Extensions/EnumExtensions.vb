@@ -1,0 +1,3 @@
+﻿Module EnumExtensions
+
+End Module

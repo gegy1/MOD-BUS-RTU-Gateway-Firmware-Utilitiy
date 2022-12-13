@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.MOD_BUS_RTU_Gateway_Firmware_Utilitiy.Main
+            Me.MainForm = Global.OpenKNX_Firmware_Utilitiy.Main
         End Sub
     End Class
 End Namespace

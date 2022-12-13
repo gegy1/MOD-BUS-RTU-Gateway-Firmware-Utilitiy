@@ -12,6 +12,17 @@ Public Class GitRepo
         Me.RepositoryName = repositoryName
         Me.WorkspaceName = workSpaceName
     End Sub
+    Function GetRepoInfoText() As String
+        Dim gitClient As New GitHubClient(New ProductHeaderValue(RepositoryName))
+        Dim t As Task(Of String) = gitClient.Repository.Content.GetReadmeHtml(WorkspaceName, RepositoryName)
+        If t.IsFaulted Then Return ""
+        Try
+            t.Wait()
+        Catch ex As Exception
+            Console.WriteLine(ex.Message) : Return ""
+        End Try
+        Return t.Result
+    End Function
     Async Function DownloadLatestCompiled() As Task(Of (ziparchive As String, version As String))
         Dim downloadTask As Task(Of (ziparchive As String, version As String)) = GitDownload()
         Return Await downloadTask

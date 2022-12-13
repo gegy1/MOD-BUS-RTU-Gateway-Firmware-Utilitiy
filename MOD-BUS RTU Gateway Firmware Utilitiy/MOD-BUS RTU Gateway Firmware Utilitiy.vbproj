@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{9015B904-000C-4A82-9D9E-98C837E7330F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>MOD_BUS_RTU_Gateway_Firmware_Utilitiy.My.MyApplication</StartupObject>
-    <RootNamespace>MOD_BUS_RTU_Gateway_Firmware_Utilitiy</RootNamespace>
-    <AssemblyName>MOD-BUS RTU Gateway Firmware Utilitiy</AssemblyName>
+    <StartupObject>OpenKNX_Firmware_Utilitiy.My.MyApplication</StartupObject>
+    <RootNamespace>OpenKNX_Firmware_Utilitiy</RootNamespace>
+    <AssemblyName>OpenKNX Firmware Utilitiy</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -22,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>MOD-BUS RTU Gateway Firmware Utilitiy.xml</DocumentationFile>
+    <DocumentationFile>OpenKNX Firmware Utilitiy.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>MOD-BUS RTU Gateway Firmware Utilitiy.xml</DocumentationFile>
+    <DocumentationFile>OpenKNX Firmware Utilitiy.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -83,6 +83,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Controller.vb" />
+    <Compile Include="DAL\FirmwareObjectFactory.vb" />
+    <Compile Include="DAL\Seriallizer.vb" />
+    <Compile Include="Extensions\EnumExtensions.vb" />
+    <Compile Include="Extensions\StringExtensions.vb" />
     <Compile Include="Main.Designer.vb">
       <DependentUpon>Main.vb</DependentUpon>
     </Compile>
@@ -90,8 +94,10 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Model\BasicFile.vb" />
+    <Compile Include="Model\Firmware.vb" />
     <Compile Include="Model\FirmwareFile.vb" />
     <Compile Include="Model\GitRepo.vb" />
+    <Compile Include="Model\Hardware.vb" />
     <Compile Include="Model\KNXProdFile.vb" />
     <Compile Include="Model\ZipDocument.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

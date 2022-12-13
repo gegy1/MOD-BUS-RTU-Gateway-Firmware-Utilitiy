@@ -41,7 +41,11 @@ Public Class Main
     End Sub
 
     Private Sub ClearStatusBox()
-        Me.StautsTextBox.Clear()
+        Me.StatusWebBrowser.Navigate("about:blank")
+        Do Until StatusWebBrowser.ReadyState = WebBrowserReadyState.Complete
+            Application.DoEvents()
+            System.Threading.Thread.Sleep(100)
+        Loop
     End Sub
 
     Private Sub SettingsButton_Click(sender As Object, e As EventArgs) Handles SettingsButton.Click
@@ -56,9 +60,15 @@ Public Class Main
 
 
     Private Sub controller_UpdateStatusTextBox(message As String, Optional clear As Boolean = False) Handles controller.UpdateStatusMessage
-        If clear Then Me.StautsTextBox.Clear()
+        'If clear Then Me.StatusWebBrowser.DocumentText = ""
         Me.BeginInvoke(Sub()
-                           Me.StautsTextBox.AppendText(message + Environment.NewLine)
+                           Dim document As HtmlDocument = Me.StatusWebBrowser.Document
+                           Me.StatusWebBrowser.Document.Body.InnerHtml = document.Body.InnerHtml + message + "<br>"
+                           'Me.StatusWebBrowser.DocumentText = Me.StatusWebBrowser.DocumentText + (message + "<br>")
+                           Do Until StatusWebBrowser.ReadyState = WebBrowserReadyState.Complete
+                               Application.DoEvents()
+                               System.Threading.Thread.Sleep(100)
+                           Loop
                        End Sub)
     End Sub
 
@@ -85,4 +95,44 @@ Public Class Main
         ClearStatusBox()
         controller.FlashFirmware()
     End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Dim h1 As New Hardware With {.Name = "PiPico"}
+        Dim h3 As New Hardware With {.Name = "OpenKNXREG"}
+        Dim h2 As New Hardware With {.Name = "MOD-BUS Gateway"}
+        Dim d1 As New Firmware With {.Name = "OAM-ModbusGateway", .LatestVersion = "1.0.2-release", .PossibleHardware = New Generic.List(Of Hardware)({h2})}
+        Dim d2 As New Firmware With {.Name = "1TE-RP2040-SmartMF", .LatestVersion = "0.12.3-Beta", .PossibleHardware = New Generic.List(Of Hardware)({h1, h3})}
+        'Dim d3 As New Firmware With {.Name = "BEM-GardenControl", .LatestVersion = "0.2-release"}
+        'Dim d4 As New Firmware With {.Name = "OAM-EnoceanGateway", .LatestVersion = "1.4-release"}
+        Dim list As New List(Of Firmware)
+        list.Add(d1)
+        list.Add(d2)
+
+        Dim ser As New Seriallizer(Of Firmware)
+        ser.SerializeListToFile(list, "devices.xml")
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim firmwareRepoListFile As String = "repos.txt"
+        With Me.FirmwaresComboBox
+            .DataSource = FirmwareObjectFactory.GetInstance.LoadFirmwaresFromTxtFile(firmwareRepoListFile)
+            .DisplayMember = "DisplayName"
+        End With
+    End Sub
+
+    Private Sub FirmwaresComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles FirmwaresComboBox.SelectedIndexChanged
+        If Me.FirmwaresComboBox.SelectedItem Is Nothing Then Return
+        Dim selectedFirmware As Firmware = TryCast(Me.FirmwaresComboBox.SelectedItem, Firmware)
+        ClearStatusBox()
+        'Me.StautsTextBox.AppendText(selectedFirmware.GitRepo.GetRepoInfoText)
+        Me.StatusWebBrowser.DocumentText = selectedFirmware.GitRepo.GetRepoInfoText
+    End Sub
+
+    Private Sub StatusWebBrowser_Navigating(sender As Object, e As WebBrowserNavigatingEventArgs) Handles StatusWebBrowser.Navigating
+        If Not e.Url.ToString = ("about:blank") Then
+            e.Cancel = True
+            System.Diagnostics.Process.Start(e.Url.ToString)
+        End If
+    End Sub
 End Class
+
