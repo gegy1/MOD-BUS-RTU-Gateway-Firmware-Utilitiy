@@ -24,6 +24,13 @@ Public Class Controller
 
     Const firmwareDirectoryName As String = "firmware"
     Const openKNXproducerDirectoryName As String = "openknxproducer"
+    Const downloadPath As String = "\download"
+
+    'Repo data for getting the openKNX repos with released firmware
+    Const metaDataWorkspaceName As String = "gegy1"
+    Const metaDataRepoName As String = "MOD-BUS-RTU-Gateway-Firmware-Utilitiy"
+    Const metaDataFileName As String = "/Metadata/FirmwareRepos.xml"
+
     Public Event UpdateStatusMessage(message As String)
 
     WithEvents firmwareFileValue As FirmwareFile = New FirmwareFile("")
@@ -48,7 +55,7 @@ Public Class Controller
         End Set
     End Property
 
-    Property ProducerLoaded As Boolean = False
+    Property AvailableFirmware As BindingList(Of Firmware) = New BindingList(Of Firmware)
 
     Sub ShowSettings()
         Dim mySetupPage As New SetupPage()
@@ -56,9 +63,18 @@ Public Class Controller
         settings.ShowDialog()
     End Sub
 
+
+
     Private firmwareExtractFileNames As New List(Of String)({"data\firmware.bin", "data\ModbusGateway.xml"})
     Private producerExtractFileNames As New List(Of String)({"tools\bossac-LICENSE.txt", "tools\bossac.exe", "tools\OpenKNXproducer.exe"})
     Private firmwareFileNames As New List(Of String)({My.Application.Info.DirectoryPath + "\firmware\firmware.bin", My.Application.Info.DirectoryPath + "\firmware\ModbusGateway.xml"})
+
+
+    Private Sub LoadAvilableFirmware()
+        Dim metaDataRepo As New GitRepo(metaDataWorkspaceName, metaDataRepoName)
+        metaDataRepo.GetSpecifiedFile(metaDataFileName)
+    End Sub
+
     Sub LookForExistingFiles()
         If File.Exists(firmwareFileNames(0)) Then Me.FirmwareFile.FileName = firmwareFileNames(0)
         If File.Exists(firmwareFileNames(1)) Then Me.KNXProdFile.FileName = firmwareFileNames(1)

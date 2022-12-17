@@ -8,12 +8,24 @@ Public Class GitRepo
     Property WorkspaceName As String
     Const downloadFolderName As String = "download\"
 
+    Private gitClient As GitHubClient
+
     Sub New(repositoryName As String, workSpaceName As String)
         Me.RepositoryName = repositoryName
         Me.WorkspaceName = workSpaceName
+        Me.gitClient = New GitHubClient(New ProductHeaderValue(repositoryName))
     End Sub
+    Function GetSpecifiedFile(fileName As String) As Boolean
+        Dim t As Task(Of IReadOnlyList(Of RepositoryContent)) = gitClient.Repository.Content.GetAllContents(WorkspaceName, RepositoryName, fileName)
+        If t.IsFaulted Then Return False
+        Try
+            t.Wait()
+        Catch ex As Exception
+            Console.WriteLine(ex.Message) : Return False
+        End Try
+        Console.WriteLine(t.Result.First.Name)
+    End Function
     Function GetRepoInfoText() As String
-        Dim gitClient As New GitHubClient(New ProductHeaderValue(RepositoryName))
         Dim t As Task(Of String) = gitClient.Repository.Content.GetReadmeHtml(WorkspaceName, RepositoryName)
         If t.IsFaulted Then Return ""
         Try
@@ -29,7 +41,6 @@ Public Class GitRepo
     End Function
     Private Async Function GitDownload() As Task(Of (ziparchive As String, version As String))
         Dim retVal As (ziparchive As String, version As String)
-        Dim gitClient As New GitHubClient(New ProductHeaderValue(RepositoryName))
         Dim latestRelease As Release = Await gitClient.Repository.Release.GetLatest(WorkspaceName, RepositoryName)
         retVal.version = latestRelease.TagName
         Dim assests As List(Of ReleaseAsset) = latestRelease.Assets

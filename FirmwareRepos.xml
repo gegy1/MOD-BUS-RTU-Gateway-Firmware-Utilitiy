@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfFirmware xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Firmware>
+    <Name>OAM-ModbusGateway</Name>
+  </Firmware>
+  <Firmware>
+    <Name>OAM-LogicModule</Name>
+  </Firmware>
+  <Firmware>
+    <Name>BEM-GardenControl</Name>
+  </Firmware>
+  <Firmware>
+    <Name>OAM-EnoceanGateway</Name>
+  </Firmware>
+</ArrayOfFirmware>
