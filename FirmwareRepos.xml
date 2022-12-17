@@ -2,14 +2,18 @@
 <ArrayOfFirmware xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Firmware>
     <Name>OAM-ModbusGateway</Name>
+    <FriendlyName>Modbus Gateway</FriendlyName>
   </Firmware>
   <Firmware>
     <Name>OAM-LogicModule</Name>
+    <FriendlyName>Modbus Gateway</FriendlyName>
   </Firmware>
   <Firmware>
     <Name>BEM-GardenControl</Name>
+    <FriendlyName>Modbus Gateway</FriendlyName>
   </Firmware>
   <Firmware>
     <Name>OAM-EnoceanGateway</Name>
+    <FriendlyName>Modbus Gateway</FriendlyName>
   </Firmware>
 </ArrayOfFirmware>
