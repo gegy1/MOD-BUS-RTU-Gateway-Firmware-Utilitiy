@@ -95,6 +95,29 @@ Public Class Seriallizer(Of T)
         End Try
     End Function
 
+    Async Function DeSerializeListFromFileAsync(fileName As String) As Task(Of List(Of T))
+        Dim serializer As XmlSerializer
+        Dim fs As FileStream = Nothing
+        If Not System.IO.File.Exists(fileName) Then Return New List(Of T)
+        Try
+            Return Await Task.Run(Function()
+                                      serializer = New XmlSerializer(GetType(List(Of T)))
+                                      fs = New FileStream(fileName, FileMode.Open, FileAccess.Read)
+                                      Return CType(serializer.Deserialize(fs), List(Of T))
+                                  End Function)
+        Catch e As Exception
+            If ShowMessages Then
+                MsgBox($"Error reading data from file: {e.Message}")
+            End If
+            Debug.WriteLine("Exeption on serializing Options \n" + e.ToString)
+            Return New List(Of T)
+        Finally
+            fs.Close()
+            fs = Nothing
+            serializer = Nothing
+        End Try
+    End Function
+
     Function SerializeObjToFile(obj As T, fileName As String)
         Dim serializer As XmlSerializer
         Dim writer As StreamWriter = Nothing

@@ -6,14 +6,14 @@
   </Firmware>
   <Firmware>
     <Name>OAM-LogicModule</Name>
-    <FriendlyName>Modbus Gateway</FriendlyName>
+    <FriendlyName>Logic Module</FriendlyName>
   </Firmware>
   <Firmware>
     <Name>BEM-GardenControl</Name>
-    <FriendlyName>Modbus Gateway</FriendlyName>
+    <FriendlyName>Garden Control</FriendlyName>
   </Firmware>
   <Firmware>
     <Name>OAM-EnoceanGateway</Name>
-    <FriendlyName>Modbus Gateway</FriendlyName>
+    <FriendlyName>Enocean Gateway</FriendlyName>
   </Firmware>
 </ArrayOfFirmware>

@@ -29,7 +29,7 @@ Public Class Controller
     'Repo data for getting the openKNX repos with released firmware
     Const metaDataWorkspaceName As String = "gegy1"
     Const metaDataRepoName As String = "MOD-BUS-RTU-Gateway-Firmware-Utilitiy"
-    Const metaDataFileName As String = "/Metadata/FirmwareRepos.xml"
+    Const metaDataFileName As String = "FirmwareRepos.xml"
 
     Public Event UpdateStatusMessage(message As String)
 
@@ -55,7 +55,19 @@ Public Class Controller
         End Set
     End Property
 
-    Property AvailableFirmware As BindingList(Of Firmware) = New BindingList(Of Firmware)
+    ReadOnly Property AvailableFirmwareSources As List(Of Firmware) ' = New List(Of Firmware)
+        Get
+            Return Me.LoadAvilableFirmware()
+            'Dim t As Task(Of List(Of Firmware)) = Me.LoadAvilableFirmware
+            'If t.IsFaulted Then Return New List(Of Firmware)
+            'Try
+            '    t.Wait()
+            'Catch ex As Exception
+            '    Console.WriteLine(ex.Message) : Return New List(Of Firmware)
+            'End Try
+            'Return t.Result
+        End Get
+    End Property
 
     Sub ShowSettings()
         Dim mySetupPage As New SetupPage()
@@ -70,10 +82,14 @@ Public Class Controller
     Private firmwareFileNames As New List(Of String)({My.Application.Info.DirectoryPath + "\firmware\firmware.bin", My.Application.Info.DirectoryPath + "\firmware\ModbusGateway.xml"})
 
 
-    Private Sub LoadAvilableFirmware()
-        Dim metaDataRepo As New GitRepo(metaDataWorkspaceName, metaDataRepoName)
-        metaDataRepo.GetSpecifiedFile(metaDataFileName)
-    End Sub
+    Function LoadAvilableFirmware() As List(Of Firmware)
+        Dim metaDataRepo As New GitRepo(metaDataRepoName, metaDataWorkspaceName)
+        Dim metaDataRepoXML As String = metaDataRepo.GetSpecifiedFile(metaDataFileName)
+        Dim serializer As New Seriallizer(Of Firmware)
+        Dim desrializeTask As List(Of Firmware) = serializer.DeSerializeListFromFile(metaDataRepoXML)
+        'desrializeTask.Wait()
+        Return desrializeTask
+    End Function
 
     Sub LookForExistingFiles()
         If File.Exists(firmwareFileNames(0)) Then Me.FirmwareFile.FileName = firmwareFileNames(0)

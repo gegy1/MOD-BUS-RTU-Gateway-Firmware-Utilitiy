@@ -30,7 +30,10 @@ Public Class Firmware
     <XmlIgnore>
     Property DeviceClass As e_deviceClass
     Property PossibleHardware As List(Of Hardware) = New List(Of Hardware)
+    Private displayNameValue As String = ""
+    <XmlElement("FriendlyName")>
     Property DisplayName As String
+
     Sub New(name As String, repo As GitRepo)
         Me.Name = name
         Me.DisplayName = name

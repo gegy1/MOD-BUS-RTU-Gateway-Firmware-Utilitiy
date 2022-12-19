@@ -7,19 +7,26 @@ Public Class Main
     WithEvents controller As Controller
 
 
-    ReadOnly Property CreateKNXPRODButtonEnable As Boolean
-        Get
-            Return File.Exists(Me.KNXxmlFileTextBox.Text) And File.Exists("openknxproducer\openknxproducer.exe")
-        End Get
-    End Property
+    'ReadOnly Property CreateKNXPRODButtonEnable As Boolean
+    '    Get
+    '        Return File.Exists(Me.KNXxmlFileTextBox.Text) And File.Exists("openknxproducer\openknxproducer.exe")
+    '    End Get
+    'End Property
 
-    ReadOnly Property FlashFirmwareButtonEnable As Boolean
-        Get
-            Return File.Exists(Me.FirmwareFileTextBox.Text)
-        End Get
-    End Property
+    'ReadOnly Property FlashFirmwareButtonEnable As Boolean
+    '    Get
+    '        Return File.Exists(Me.FirmwareFileTextBox.Text)
+    '    End Get
+    'End Property
 
+    Sub New()
+        'Controller.GetInstance().LoadAvilableFirmware()
+        ' This call is required by the designer.
+        InitializeComponent()
 
+        ' Add any initialization after the InitializeComponent() call.
+
+    End Sub
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
@@ -33,10 +40,14 @@ Public Class Main
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = $"{My.Application.Info.ProductName} {versionString}"
         controller = Controller.GetInstance
-        Me.FirmwareFileTextBox.DataBindings.Add(controller.FirmwareFile.TextBinding)
-        Me.KNXxmlFileTextBox.DataBindings.Add(controller.KNXProdFile.TextBinding)
+        'Me.FirmwareFileTextBox.DataBindings.Add(controller.FirmwareFile.TextBinding)
+        'Me.KNXxmlFileTextBox.DataBindings.Add(controller.KNXProdFile.TextBinding)
         Me.FlashFirmwareButton.DataBindings.Add(controller.FirmwareFile.EnableBinding)
         Me.CreateKNXProdFileButton.DataBindings.Add(controller.KNXProdFile.EnableBinding)
+        With Me.FirmwaresComboBox
+            .DataSource = Controller.GetInstance.AvailableFirmwareSources
+            .DisplayMember = "DisplayName"
+        End With
         controller.LookForExistingFiles()
     End Sub
 
@@ -52,7 +63,7 @@ Public Class Main
         controller.ShowSettings()
     End Sub
 
-    Private Async Sub LoadLatestButton_Click(sender As Object, e As EventArgs) Handles LoadLatestButton.Click
+    Private Async Sub LoadLatestButton_Click(sender As Object, e As EventArgs)
         ClearStatusBox()
         Dim downloadFirmwareTask As Task(Of Boolean) = controller.DownloadFirmware()
         Dim downloadedOk As Boolean = Await downloadFirmwareTask
@@ -72,14 +83,14 @@ Public Class Main
                        End Sub)
     End Sub
 
-    Private Sub SelectKNXProdXMLButton_Click(sender As Object, e As EventArgs) Handles SelectKNXProdXMLButton.Click
+    Private Sub SelectKNXProdXMLButton_Click(sender As Object, e As EventArgs)
         Dim openFileDialog As New OpenFileDialog With {.Multiselect = False, .Filter = "KNX xml (*.xml)|*.xml", .InitialDirectory = My.Application.Info.DirectoryPath + "\firmware"}
         If openFileDialog.ShowDialog = DialogResult.OK Then
             Controller.GetInstance.KNXProdFile.FileName = openFileDialog.FileName
         End If
     End Sub
 
-    Private Sub SelectFirmwareButton_Click(sender As Object, e As EventArgs) Handles SelectFirmwareButton.Click
+    Private Sub SelectFirmwareButton_Click(sender As Object, e As EventArgs)
         Dim openFileDialog As New OpenFileDialog With {.Multiselect = False, .Filter = "Firmware file (*.bin)|*.bin", .InitialDirectory = My.Application.Info.DirectoryPath + "\firmware"}
         If openFileDialog.ShowDialog = DialogResult.OK Then
             Controller.GetInstance.FirmwareFile.FileName = openFileDialog.FileName
@@ -97,22 +108,24 @@ Public Class Main
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        Dim h1 As New Hardware With {.Name = "PiPico"}
-        Dim h3 As New Hardware With {.Name = "OpenKNXREG"}
-        Dim h2 As New Hardware With {.Name = "MOD-BUS Gateway"}
-        Dim d1 As New Firmware With {.Name = "OAM-ModbusGateway", .LatestVersion = "1.0.2-release", .PossibleHardware = New Generic.List(Of Hardware)({h2})}
-        Dim d2 As New Firmware With {.Name = "1TE-RP2040-SmartMF", .LatestVersion = "0.12.3-Beta", .PossibleHardware = New Generic.List(Of Hardware)({h1, h3})}
-        'Dim d3 As New Firmware With {.Name = "BEM-GardenControl", .LatestVersion = "0.2-release"}
-        'Dim d4 As New Firmware With {.Name = "OAM-EnoceanGateway", .LatestVersion = "1.4-release"}
-        Dim list As New List(Of Firmware)
-        list.Add(d1)
-        list.Add(d2)
+        Main_Load(Nothing, Nothing)
+        'Dim h1 As New Hardware With {.Name = "PiPico"}
+        'Dim h3 As New Hardware With {.Name = "OpenKNXREG"}
+        'Dim h2 As New Hardware With {.Name = "MOD-BUS Gateway"}
+        'Dim d1 As New Firmware With {.Name = "OAM-ModbusGateway", .LatestVersion = "1.0.2-release", .PossibleHardware = New Generic.List(Of Hardware)({h2})}
+        'Dim d2 As New Firmware With {.Name = "1TE-RP2040-SmartMF", .LatestVersion = "0.12.3-Beta", .PossibleHardware = New Generic.List(Of Hardware)({h1, h3})}
+        ''Dim d3 As New Firmware With {.Name = "BEM-GardenControl", .LatestVersion = "0.2-release"}
+        ''Dim d4 As New Firmware With {.Name = "OAM-EnoceanGateway", .LatestVersion = "1.4-release"}
+        'Dim list As New List(Of Firmware)
+        'list.Add(d1)
+        'list.Add(d2)
 
-        Dim ser As New Seriallizer(Of Firmware)
-        ser.SerializeListToFile(list, "devices.xml")
+        'Dim ser As New Seriallizer(Of Firmware)
+        'ser.SerializeListToFile(list, "devices.xml")
+        'controller.LoadAvilableFirmware()
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
         Dim firmwareRepoListFile As String = "repos.txt"
         With Me.FirmwaresComboBox
             .DataSource = FirmwareObjectFactory.GetInstance.LoadFirmwaresFromTxtFile(firmwareRepoListFile)
@@ -125,7 +138,7 @@ Public Class Main
         Dim selectedFirmware As Firmware = TryCast(Me.FirmwaresComboBox.SelectedItem, Firmware)
         ClearStatusBox()
         'Me.StautsTextBox.AppendText(selectedFirmware.GitRepo.GetRepoInfoText)
-        Me.StatusWebBrowser.DocumentText = selectedFirmware.GitRepo.GetRepoInfoText
+        'Me.StatusWebBrowser.DocumentText = selectedFirmware.GitRepo.GetRepoInfoText
     End Sub
 
     Private Sub StatusWebBrowser_Navigating(sender As Object, e As WebBrowserNavigatingEventArgs) Handles StatusWebBrowser.Navigating
