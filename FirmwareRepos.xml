@@ -16,4 +16,8 @@
     <Name>OAM-EnoceanGateway</Name>
     <FriendlyName>Enocean Gateway</FriendlyName>
   </Firmware>
+  <Firmware>
+    <Name>OAM-PresenceModule</Name>
+    <FriendlyName>Presence Module</FriendlyName>
+  </Firmware>
 </ArrayOfFirmware>
